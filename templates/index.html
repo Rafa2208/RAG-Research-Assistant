@@ -1,0 +1,1943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research Assistant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Marked.js for markdown rendering -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<style>
+/* ── Reset & Variables ──────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:        #1a1a2e;
+  --ink-mid:    #3d3d5c;
+  --ink-soft:   #6b6b8a;
+  --ink-ghost:  #a8a8c0;
+  --paper:      #fafaf7;
+  --paper-warm: #f5f4ef;
+  --paper-tint: #eeecea;
+  --rule:       #e2e0da;
+  --rule-soft:  #ede9e2;
+  --accent:     #1D7A5F;
+  --accent-mid: #2a9d80;
+  --accent-lit: #d4ede7;
+  --accent-pale:#edf7f4;
+  --blue:       #2c5282;
+  --blue-lit:   #ebf0fa;
+  --warn:       #92400e;
+  --warn-lit:   #fef3c7;
+  --danger:     #991b1b;
+  --danger-lit: #fee2e2;
+  --success:    #14532d;
+  --success-lit:#dcfce7;
+  --shadow-sm:  0 1px 3px rgba(26,26,46,.06), 0 1px 2px rgba(26,26,46,.04);
+  --shadow-md:  0 4px 16px rgba(26,26,46,.08), 0 2px 6px rgba(26,26,46,.05);
+  --shadow-lg:  0 12px 40px rgba(26,26,46,.12), 0 4px 12px rgba(26,26,46,.06);
+  --r-sm:  6px;
+  --r-md:  10px;
+  --r-lg:  16px;
+  --r-xl:  22px;
+}
+
+html, body {
+  height: 100%;
+  background: var(--paper-warm);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Shell ──────────────────────────────────────────────── */
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper-warm);
+}
+
+/* ══════════════════════════════════════════════════════════
+   PAGE 0 — SPLASH / LANDING
+══════════════════════════════════════════════════════════ */
+.splash-page {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  opacity: 1;
+  transition: opacity 0.6s ease-out;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+.splash-page.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.splash-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  text-align: center;
+  padding: 40px 24px;
+}
+
+.splash-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.splash-mark {
+  width: 64px;
+  height: 64px;
+  background: transparent;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  animation: slideDown 0.6s ease-out;
+  overflow: visible;
+  padding: 0;
+}
+
+.splash-mark svg {
+  width: 36px;
+  height: 36px;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.splash-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 34px;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0;
+  white-space: nowrap;
+  animation: slideDown 0.6s ease-out 0.1s both;
+}
+
+.splash-subtitle {
+  font-size: 15px;
+  color: var(--ink-soft);
+  max-width: 480px;
+  line-height: 1.7;
+  margin: 0;
+  animation: slideDown 0.6s ease-out 0.2s both;
+}
+
+.splash-cta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 28px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: var(--r-md);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(29,122,95,.3);
+  animation: slideDown 0.6s ease-out 0.3s both;
+}
+
+.splash-cta:hover {
+  background: var(--accent-mid);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(29,122,95,.4);
+}
+
+.splash-cta:active {
+  transform: translateY(0);
+}
+
+.splash-arrow {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.splash-arrow svg {
+  width: 100%;
+  height: 100%;
+  stroke: white;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ── Topbar ─────────────────────────────────────────────── */
+.topbar {
+  height: 54px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.4s ease 0.2s;
+}
+
+.topbar.visible {
+  opacity: 1;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-mark {
+  width: 28px; height: 28px;
+  background: transparent;
+  border-radius: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.logo-mark svg { width: 28px; height: 28px; }
+.logo-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 16px;
+  color: var(--ink);
+  letter-spacing: -.01em;
+}
+.logo-name span { color: var(--accent); }
+
+/* Breadcrumb nav */
+.nav-trail {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nav-step {
+  font-size: 12px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  color: var(--ink-ghost);
+  cursor: default;
+  transition: all .2s;
+  font-weight: 500;
+  border: 1px solid transparent;
+}
+.nav-step.active {
+  color: var(--accent);
+  background: var(--accent-pale);
+  border-color: var(--accent-lit);
+}
+.nav-step.done {
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.nav-step.done:hover { color: var(--ink); background: var(--paper-warm); }
+.nav-sep { color: var(--rule); font-size: 14px; }
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.kb-badge {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--rule);
+  color: var(--ink-soft);
+  font-family: 'DM Mono', monospace;
+  transition: all .3s;
+}
+.kb-badge.ready {
+  color: var(--success);
+  background: var(--success-lit);
+  border-color: #86efac;
+}
+.kb-badge.indexing {
+  color: var(--warn);
+  background: var(--warn-lit);
+  border-color: #fcd34d;
+}
+
+/* ── Page System ─────────────────────────────────────────── */
+.page { display: none; flex: 1; flex-direction: column; overflow: hidden; min-height: 0; }
+.page.active { display: flex; }
+
+/* ══════════════════════════════════════════════════════════
+   PAGE 1 — LANDING / UPLOAD
+══════════════════════════════════════════════════════════ */
+.p1-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 24px 24px 32px;
+  gap: 16px;
+  background: var(--paper-warm);
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Decorative background grid */
+.p1-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--rule-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--rule-soft) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: .5;
+}
+
+.p1-hero {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.p1-hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px;
+  color: var(--ink);
+  letter-spacing: -.02em;
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+.p1-hero h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+.p1-hero p {
+  font-size: 13px;
+  color: var(--ink-soft);
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+/* API Key config area */
+.api-config {
+  width: 100%;
+  max-width: 520px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  padding: 12px 16px;
+  position: relative;
+  z-index: 1;
+  box-shadow: var(--shadow-sm);
+}
+.api-config-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.api-config label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-mid);
+  white-space: nowrap;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+.api-input {
+  flex: 1;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-sm);
+  padding: 7px 12px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  background: var(--paper-warm);
+  color: var(--ink);
+  outline: none;
+  transition: border-color .15s;
+}
+.api-input:focus { border-color: var(--accent); }
+.btn-connect {
+  padding: 7px 16px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity .15s;
+}
+.btn-connect:hover { opacity: .8; }
+.api-status {
+  font-size: 12px;
+  margin-top: 8px;
+  padding: 6px 10px;
+  border-radius: var(--r-sm);
+  display: none;
+}
+.api-status.ok   { display: block; background: var(--success-lit); color: var(--success); }
+.api-status.err  { display: block; background: var(--danger-lit);  color: var(--danger);  }
+
+/* Upload Zone */
+.upload-zone {
+  width: 100%;
+  max-width: 520px;
+  background: var(--paper);
+  border: 1.5px dashed var(--rule);
+  border-radius: var(--r-xl);
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all .2s;
+  position: relative;
+  z-index: 1;
+  box-shadow: var(--shadow-sm);
+}
+.upload-zone:hover, .upload-zone.drag-over {
+  border-color: var(--accent);
+  background: var(--accent-pale);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.upload-icon-wrap {
+  width: 52px; height: 52px;
+  background: var(--paper-warm);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  display: flex; align-items: center; justify-content: center;
+}
+.upload-zone h3 {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.upload-zone p {
+  font-size: 12px;
+  color: var(--ink-ghost);
+  text-align: center;
+}
+.upload-formats {
+  display: flex;
+  gap: 6px;
+}
+.fmt-tag {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--paper-tint);
+  color: var(--ink-soft);
+  font-family: 'DM Mono', monospace;
+  border: 1px solid var(--rule);
+}
+#fileInput { display: none; }
+
+/* File list */
+.file-list {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+}
+.file-item {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: slideIn .25s ease-out;
+  box-shadow: var(--shadow-sm);
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.file-icon {
+  width: 32px; height: 32px;
+  background: #fee2e2;
+  border-radius: var(--r-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #991b1b;
+  font-family: 'DM Mono', monospace;
+  flex-shrink: 0;
+}
+.file-info { flex: 1; min-width: 0; }
+.file-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.file-meta { font-size: 11px; color: var(--ink-ghost); }
+.file-delete {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink-ghost);
+  flex-shrink: 0;
+  transition: all .15s;
+  padding: 0;
+}
+.file-delete:hover {
+  background: var(--paper-tint);
+  color: var(--ink-soft);
+}
+.file-delete svg {
+  width: 12px; height: 12px;
+}
+.file-status {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.status-processing { background: var(--warn-lit);    color: var(--warn);    }
+.status-accepted   { background: var(--success-lit); color: var(--success); }
+.status-rejected   { background: var(--danger-lit);  color: var(--danger);  }
+.status-duplicate  { background: var(--blue-lit);    color: var(--blue);    }
+
+.actions-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.btn-primary {
+  padding: 10px 28px;
+  border-radius: var(--r-md);
+  background: var(--accent);
+  color: white;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .2s;
+  box-shadow: 0 2px 8px rgba(29,122,95,.3);
+}
+.btn-primary:hover { background: var(--accent-mid); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(29,122,95,.35); }
+.btn-primary:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+.btn-ghost {
+  padding: 10px 20px;
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1px solid var(--rule);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all .15s;
+}
+.btn-ghost:hover { background: var(--paper-warm); color: var(--ink); }
+
+/* Footer disclaimer */
+.footer-disc {
+  padding: 10px 24px;
+  background: var(--paper);
+  border-top: 1px solid var(--rule);
+  text-align: center;
+  font-size: 11px;
+  color: var(--ink-ghost);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease 0.2s;
+}
+
+.footer-disc.visible {
+  opacity: 1;
+}
+
+/* ══════════════════════════════════════════════════════════
+   PAGE 2 — MODE SELECTION
+══════════════════════════════════════════════════════════ */
+.p2-wrap {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px 40px;
+  background: var(--paper-warm);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-ghost);
+  margin-bottom: 12px;
+}
+
+.mode-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.mode-card {
+  background: var(--paper);
+  border: 1.5px solid var(--rule);
+  border-radius: var(--r-lg);
+  padding: 22px;
+  cursor: pointer;
+  transition: all .2s;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.mode-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: transparent;
+  transition: background .2s;
+}
+.mode-card:hover { border-color: var(--rule-soft); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.mode-card.selected { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-lit), var(--shadow-md); }
+.mode-card.selected::before { background: var(--accent); }
+.mode-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  padding: 3px 10px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+.badge-qa { background: var(--blue-lit); color: var(--blue); }
+.badge-lr { background: var(--accent-lit); color: var(--accent); }
+.mode-card h3 { font-size: 16px; font-weight: 500; margin-bottom: 6px; color: var(--ink); }
+.mode-card p  { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+.mode-card-check {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: none;
+  align-items: center; justify-content: center;
+}
+.mode-card.selected .mode-card-check { display: flex; }
+
+.scope-panel {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+.scope-panel h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-mid);
+  margin-bottom: 12px;
+}
+.styled-select {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-sm);
+  background: var(--paper-warm);
+  color: var(--ink);
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b6b8a' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  transition: border-color .15s;
+}
+.styled-select:focus { border-color: var(--accent); }
+
+.p2-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px;
+  background: var(--paper);
+  border-top: 1px solid var(--rule);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease 0.2s;
+}
+
+.p2-footer.visible {
+  opacity: 1;
+}
+
+/* ══════════════════════════════════════════════════════════
+   PAGE 3 — INTERACTION
+══════════════════════════════════════════════════════════ */
+.p3-layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.p3-sidebar {
+  background: var(--paper);
+  border-right: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.sidebar-head {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--rule);
+  flex-shrink: 0;
+}
+.sidebar-head h4 {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink-ghost);
+}
+.sidebar-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 10px;
+}
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 8px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: all .15s;
+  margin-bottom: 2px;
+}
+.sidebar-item:hover { background: var(--paper-warm); }
+.sidebar-item.active {
+  background: var(--accent-pale);
+  color: var(--accent);
+}
+.sidebar-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--rule);
+}
+.sidebar-item.active .sidebar-dot { background: var(--accent); }
+.sidebar-item-text {
+  font-size: 12px;
+  color: var(--ink-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+.sidebar-item.active .sidebar-item-text { color: var(--accent); font-weight: 500; }
+
+.sidebar-mode-tag {
+  margin: 10px 10px 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink-ghost);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* Main panel */
+.p3-main { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+
+.p3-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  flex-shrink: 0;
+}
+.p3-topbar-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 60%;
+}
+.p3-topbar-meta { font-size: 11px; color: var(--ink-ghost); }
+.mode-pill {
+  font-size: 11px;
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  flex-shrink: 0;
+}
+.pill-qa { background: var(--blue-lit); color: var(--blue); }
+.pill-lr { background: var(--accent-lit); color: var(--accent); }
+
+/* ── Q&A Panel ──────────────────────────────────────────── */
+#qaPanel { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.chat-area {
+  flex: 1;
+  padding: 24px 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.msg { display: flex; gap: 10px; max-width: 88%; }
+.msg.user { align-self: flex-end; flex-direction: row-reverse; }
+
+.avatar {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  margin-top: 2px;
+}
+.avatar.ai   { background: var(--accent-lit);  color: var(--accent); }
+.avatar.user { background: var(--ink-mid); color: var(--paper); }
+
+.bubble {
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+.bubble.ai {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  border-radius: 4px 14px 14px 14px;
+  box-shadow: var(--shadow-sm);
+}
+.bubble.user {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 14px 4px 14px 14px;
+}
+
+/* Markdown inside bubbles */
+.md-body { font-size: 13.5px; line-height: 1.7; }
+.md-body p { margin-bottom: 8px; }
+.md-body p:last-child { margin-bottom: 0; }
+.md-body strong { font-weight: 600; color: var(--ink); }
+.md-body em { font-style: italic; }
+.md-body ul, .md-body ol { padding-left: 18px; margin: 8px 0; }
+.md-body li { margin-bottom: 4px; }
+.md-body code {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  background: var(--paper-tint);
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.md-body h1,.md-body h2,.md-body h3 {
+  font-weight: 600;
+  margin: 12px 0 6px;
+  color: var(--ink);
+}
+
+.sources-row {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.source-chip {
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 10px;
+  background: var(--accent-pale);
+  color: var(--accent);
+  border: 1px solid var(--accent-lit);
+  font-weight: 500;
+}
+.eval-row {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.eval-chip {
+  font-size: 11px;
+  padding: 2px 9px;
+  border-radius: 10px;
+  background: var(--success-lit);
+  color: var(--success);
+  border: 1px solid #86efac;
+  font-family: 'DM Mono', monospace;
+}
+
+/* Typing indicator */
+.typing-dots { display: flex; gap: 4px; align-items: center; padding: 2px 0; }
+.typing-dots span {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--ink-ghost);
+  animation: blink 1.3s ease-in-out infinite;
+}
+.typing-dots span:nth-child(2) { animation-delay: .2s; }
+.typing-dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes blink { 0%,80%,100%{opacity:.2} 40%{opacity:1} }
+
+.chat-input-area {
+  padding: 14px 16px;
+  background: var(--paper);
+  border-top: 1px solid var(--rule);
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+.chat-textarea {
+  flex: 1;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  padding: 9px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px;
+  color: var(--ink);
+  background: var(--paper-warm);
+  resize: none;
+  min-height: 40px;
+  max-height: 120px;
+  outline: none;
+  transition: border-color .15s;
+  line-height: 1.5;
+}
+.chat-textarea:focus { border-color: var(--accent); background: var(--paper); }
+.chat-textarea::placeholder { color: var(--ink-ghost); }
+.send-btn {
+  width: 38px; height: 38px;
+  border-radius: var(--r-sm);
+  background: var(--ink);
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all .15s;
+  box-shadow: var(--shadow-sm);
+}
+.send-btn:hover { background: var(--accent); transform: translateY(-1px); }
+.send-btn:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+
+/* ── Literature Review Panel ────────────────────────────── */
+#lrPanel { display: none; flex: 1; flex-direction: column; overflow: hidden; }
+.lr-area {
+  flex: 1;
+  padding: 24px 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.lr-header-card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
+}
+.lr-header-card h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px;
+  color: var(--ink);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.lr-header-meta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.lr-meta-item {
+  font-size: 12px;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.lr-meta-item strong { color: var(--ink-mid); font-weight: 500; }
+
+.lr-section-card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .35s ease, transform .35s ease;
+}
+.lr-section-card.visible { opacity: 1; transform: translateY(0); }
+
+.lr-section-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.lr-num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--accent-lit);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-family: 'DM Mono', monospace;
+}
+.lr-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.lr-section-body {
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+.lr-section-body h1,
+.lr-section-body h2,
+.lr-section-body h3,
+.lr-section-body h4 {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 10px 0 4px;
+}
+.lr-section-body strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+.lr-section-body p { margin-bottom: 8px; }
+.lr-section-body p:last-child { margin-bottom: 0; }
+.lr-section-body strong { font-weight: 600; color: var(--ink); }
+.lr-section-body ul, .lr-section-body ol { padding-left: 18px; margin: 8px 0; }
+.lr-section-body li { margin-bottom: 4px; }
+
+.generating-msg {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  background: var(--paper);
+  border: 1px dashed var(--rule);
+  border-radius: var(--r-lg);
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.generating-dots { display: flex; gap: 4px; }
+.generating-dots span {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: blink 1.3s ease-in-out infinite;
+}
+.generating-dots span:nth-child(2) { animation-delay: .2s; }
+.generating-dots span:nth-child(3) { animation-delay: .4s; }
+
+/* ── Error toast ─────────────────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  background: var(--danger-lit);
+  color: var(--danger);
+  border: 1px solid #fca5a5;
+  border-radius: var(--r-md);
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 100;
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all .25s;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--ink-ghost); }
+
+/* Utility */
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- ══════════════════════════════════════════════════════
+       PAGE 0 — SPLASH SCREEN
+  ══════════════════════════════════════════════════════ -->
+  <div class="splash-page" id="splashPage">
+    <div class="splash-container">
+      <div class="splash-logo">
+        <div class="splash-mark"><img src="/static/research_assistant_logo1.jpg" style="width:135%;height:135%;object-fit:contain;border-radius:0;"></div>
+        <h1 class="splash-title">Research Assistant</h1>
+      </div>
+      <p class="splash-subtitle">A RAG Based Intelligent Research Assistant for Academic Document Analysis, Automated Question Answering and Literature Review</p>
+      <button class="splash-cta" onclick="startApp()">
+        Get Started
+        <div class="splash-arrow">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Topbar ── -->
+  <div class="topbar" id="topbar">
+<div class="logo">
+  <div class="logo-mark">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 19V5a1 1 0 011-1h11a3 3 0 013 3v12a3 3 0 01-3 3H5a1 1 0 01-1-1z" stroke="#1D7A5F" stroke-width="1.5"/>
+      <path d="M8 9h8M8 13h5M15 17H8" stroke="#1D7A5F" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M15 4v4h4" stroke="#1D7A5F" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <span class="logo-name">Research<span>Assistant</span></span>
+</div>
+
+    <div class="nav-trail">
+      <span class="nav-step active" id="navStep1" onclick="goToPage(1)">Upload</span>
+      <span class="nav-sep">›</span>
+      <span class="nav-step" id="navStep2" onclick="goToPage(2)">Configure</span>
+      <span class="nav-sep">›</span>
+      <span class="nav-step" id="navStep3" onclick="goToPage(3)">Analyse</span>
+    </div>
+
+    <div class="topbar-right">
+      <span class="kb-badge" id="kbBadge">KB: idle</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       PAGE 1 — UPLOAD
+  ══════════════════════════════════════════════════════ -->
+  <div class="page" id="page1">
+    <div class="p1-wrap">
+
+      <!-- Hero -->
+      <div class="p1-hero">
+        <h1>Analyse your<br><em>research corpus</em></h1>
+        <p>Upload academic PDFs to enable grounded Q&A and automated literature reviews powered by hybrid RAG.</p>
+      </div>
+
+      <!-- Groq API config -->
+      <div class="api-config">
+        <div class="api-config-row">
+          <label>Groq API Key</label>
+          <input class="api-input" id="apiKeyInput" type="password" placeholder="gsk_…">
+          <button class="btn-connect" onclick="connectGroq()">Connect</button>
+        </div>
+        <div class="api-status" id="apiStatus"></div>
+      </div>
+
+      <!-- Upload zone -->
+      <div class="upload-zone" id="uploadZone"
+           onclick="document.getElementById('fileInput').click()"
+           ondragover="handleDragOver(event)"
+           ondragleave="handleDragLeave(event)"
+           ondrop="handleDrop(event)">
+        <div class="upload-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 16V8m0 0l-3 3m3-3l3 3" stroke="#6b6b8a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 15v2a4 4 0 004 4h10a4 4 0 004-4v-2" stroke="#6b6b8a" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Drop PDF files here</h3>
+        <p>Drag &amp; drop or click to browse<br>Digital-born and OCR'd PDFs supported</p>
+        <div class="upload-formats">
+          <span class="fmt-tag">PDF</span>
+          <span class="fmt-tag">Digital Born</span>
+          <span class="fmt-tag">OCR Scanned</span>
+        </div>
+        <input type="file" id="fileInput" multiple accept=".pdf" onchange="handleFileSelect(event)">
+      </div>
+
+      <!-- File list -->
+      <div class="file-list" id="fileList"></div>
+
+      <!-- Actions -->
+      <div class="actions-row" id="actionsRow" style="display:none">
+        <button class="btn-primary" id="proceedBtn" onclick="goToPage(2)" disabled>
+          Continue to Mode Selection →
+        </button>
+        <button class="btn-ghost" onclick="document.getElementById('fileInput').click()">
+          + Add more
+        </button>
+      </div>
+
+    </div>
+    <div class="footer-disc" id="footerDisc1">
+      The model can make mistakes. Please verify important information from the original sources.
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       PAGE 2 — MODE SELECTION
+  ══════════════════════════════════════════════════════ -->
+  <div class="page" id="page2">
+    <div class="p2-wrap">
+
+      <!-- Mode cards -->
+      <div>
+        <p class="section-label">Select analysis mode</p>
+        <div class="mode-cards">
+          <div class="mode-card" id="cardQA" onclick="selectMode('qa')">
+            <div class="mode-card-check">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M2 5l2.5 2.5L8 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="mode-badge badge-qa">Q&amp;A</div>
+            <h3>Agentic Question &amp; Answer</h3>
+            <p>Ask questions across your corpus. A LangGraph agent retrieves, self-critiques, and refines answers using FAISS + BM25 hybrid retrieval and CrossEncoder reranking.</p>
+          </div>
+          <div class="mode-card" id="cardLR" onclick="selectMode('lr')">
+            <div class="mode-card-check">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M2 5l2.5 2.5L8 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="mode-badge badge-lr">Literature Review</div>
+            <h3>Automated Literature Review</h3>
+            <p>Generate a structured 5-section academic review of any paper: Background, Arguments, Evidence, Limitations, and Future Directions.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scope selection -->
+      <div class="scope-panel" id="scopePanel">
+        <h4 id="scopeLabel">Select scope for Q&amp;A</h4>
+        <select class="styled-select" id="scopeSelect"></select>
+      </div>
+
+    </div>
+    <div class="p2-footer" id="p2Footer">
+      <button class="btn-ghost" onclick="goToPage(1)">← Back</button>
+      <button class="btn-primary" id="startBtn" onclick="goToPage(3)" disabled>
+        Start Analysis →
+      </button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       PAGE 3 — INTERACTION
+  ══════════════════════════════════════════════════════ -->
+  <div class="page" id="page3">
+    <div class="p3-layout">
+
+      <!-- Sidebar -->
+      <div class="p3-sidebar">
+        <div class="sidebar-head"><h4>Corpus</h4></div>
+        <div class="sidebar-body" id="sidebarBody">
+          <div class="sidebar-mode-tag" id="sidebarModeTag">Q&amp;A Mode</div>
+          <div id="sidebarFiles"></div>
+        </div>
+      </div>
+
+      <!-- Main -->
+      <div class="p3-main">
+        <div class="p3-topbar">
+          <div>
+            <div class="p3-topbar-title" id="p3Title">All Papers</div>
+            <div class="p3-topbar-meta" id="p3Meta"></div>
+          </div>
+          <span class="mode-pill" id="modePill">Q&amp;A</span>
+        </div>
+
+        <!-- Q&A Panel -->
+        <div id="qaPanel">
+          <div class="chat-area" id="chatArea">
+            <div class="msg">
+              <div class="avatar ai">RA</div>
+              <div class="bubble ai">
+                <div class="md-body">
+                  <p>Hello. I'm your Research Assistant. I have indexed your corpus and am ready to answer questions.</p>
+                  <p>I retrieve evidence using <strong>hybrid FAISS + BM25 retrieval</strong> with CrossEncoder reranking, and self-critique my retrieval before generating an answer.</p>
+                  <p>Ask me anything about your uploaded papers.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="chat-input-area">
+            <textarea class="chat-textarea" id="chatInput"
+              placeholder="Ask a question about the research…"
+              rows="1"
+              onkeydown="handleChatKey(event)"
+              oninput="autoResize(this)"></textarea>
+            <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="Send">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M13.5 8L2.5 2.5l3 5.5-3 5.5L13.5 8z" fill="white"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Literature Review Panel -->
+        <div id="lrPanel">
+          <div class="lr-area" id="lrArea">
+            <div class="generating-msg" id="generatingMsg">
+              <div class="generating-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span>Generating literature review — this may take a minute…</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /p3-main -->
+    </div><!-- /p3-layout -->
+
+    <div class="footer-disc" id="footerDisc3">
+      The model can make mistakes. Please verify important information from the original sources.
+    </div>
+  </div>
+
+</div><!-- /app-shell -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════════════
+const state = {
+  currentPage : 0,      // 0 = splash, 1 = upload, 2 = mode, 3 = interact
+  mode        : null,   // 'qa' | 'lr'
+  scopePaperId: null,   // null = all papers
+  papers      : [],     // [{paper_id, filename, title, authors, pages}]
+  apiReady    : false,
+  kbReady     : false,
+  lrGenerated : {},     // paper_id → true
+  qaWaiting   : false
+};
+
+// ══════════════════════════════════════════════════════════
+//  SPLASH SCREEN → MAIN APP
+// ══════════════════════════════════════════════════════════
+function startApp() {
+  const splash  = document.getElementById('splashPage');
+  const topbar  = document.getElementById('topbar');
+  const footer  = document.getElementById('footerDisc1');
+  const p2Footer = document.getElementById('p2Footer');
+  const page1   = document.getElementById('page1');
+
+  // Show page1 and topbar FIRST before fading splash
+  state.currentPage = 1;
+  page1.classList.add('active');
+  topbar.classList.add('visible');
+  footer.classList.add('visible');
+  p2Footer.classList.add('visible');
+
+  // Then fade splash out on top
+  requestAnimationFrame(() => {
+    splash.classList.add('fade-out');
+  });
+
+  // Remove splash from DOM after transition completes
+  setTimeout(() => {
+    splash.style.display = 'none';
+  }, 700);
+}
+
+// ══════════════════════════════════════════════════════════
+//  PAGE NAVIGATION
+// ══════════════════════════════════════════════════════════
+function goToPage(n) {
+  if (state.currentPage === 0) return; // Stuck on splash until startApp()
+  if (n > state.currentPage + 1) return; // can't skip
+  if (n === 1 && state.currentPage > 1) {
+    // allow back
+  } else if (n === 2 && state.papers.length === 0) {
+    showToast('Upload at least one paper first.'); return;
+  } else if (n === 3 && !state.mode) {
+    showToast('Please select a mode first.'); return;
+  }
+
+  state.currentPage = n;
+  document.querySelectorAll('.page').forEach((p, i) => {
+    p.classList.toggle('active', i + 1 === n);
+  });
+
+  // Nav steps
+  ['navStep1','navStep2','navStep3'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.classList.toggle('active', i + 1 === n);
+    el.classList.toggle('done',   i + 1 < n);
+  });
+
+  if (n === 2) populatePage2();
+  if (n === 3) initPage3();
+}
+
+// ══════════════════════════════════════════════════════════
+//  GROQ CONNECTION
+// ══════════════════════════════════════════════════════════
+async function connectGroq() {
+  const key = document.getElementById('apiKeyInput').value.trim();
+  if (!key) { showToast('Enter your Groq API key.'); return; }
+  const statusEl = document.getElementById('apiStatus');
+  statusEl.className = 'api-status';
+  statusEl.textContent = 'Connecting…';
+  statusEl.style.display = 'block';
+  try {
+    const r = await fetch('/api/configure', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({groq_api_key: key})
+    });
+    const data = await r.json();
+    if (data.status === 'connected') {
+      statusEl.className = 'api-status ok';
+      statusEl.textContent = `✓ Connected — model: ${data.model}`;
+      state.apiReady = true;
+    } else {
+      statusEl.className = 'api-status err';
+      statusEl.textContent = `✗ ${data.error}`;
+    }
+  } catch(e) {
+    statusEl.className = 'api-status err';
+    statusEl.textContent = '✗ Connection failed';
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+//  FILE UPLOAD
+// ══════════════════════════════════════════════════════════
+function handleDragOver(e)  { e.preventDefault(); document.getElementById('uploadZone').classList.add('drag-over'); }
+function handleDragLeave(e) { document.getElementById('uploadZone').classList.remove('drag-over'); }
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('uploadZone').classList.remove('drag-over');
+  const files = Array.from(e.dataTransfer.files).filter(f => f.name.endsWith('.pdf'));
+  if (files.length) uploadFiles(files);
+}
+function handleFileSelect(e) {
+  const files = Array.from(e.target.files);
+  if (files.length) uploadFiles(files);
+  e.target.value = '';
+}
+async function refreshPapers() {
+  const r = await fetch('/api/papers');
+  const d = await r.json();
+  state.papers = d.papers || [];
+}
+
+async function uploadFiles(files) {
+  document.getElementById('actionsRow').style.display = 'flex';
+  document.getElementById('proceedBtn').disabled = true;
+
+  const formData = new FormData();
+  for (const f of files) formData.append('files', f);
+
+  // Show processing placeholders
+  const fl = document.getElementById('fileList');
+  const tempIds = [];
+  files.forEach(f => {
+    const id = 'tmp_' + Date.now() + Math.random();
+    tempIds.push(id);
+    const size = (f.size / 1024).toFixed(0) + ' KB';
+    fl.insertAdjacentHTML('beforeend', `
+      <div class="file-item" id="${id}">
+        <div class="file-icon">PDF</div>
+        <div class="file-info">
+          <div class="file-name">${f.name}</div>
+          <div class="file-meta">${size}</div>
+        </div>
+        <span class="file-status status-processing">Processing…</span>
+        <button class="file-delete" onclick="deleteFileItem('${id}')" title="Remove">
+          <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>`);
+  });
+
+  try {
+    const resp = await fetch('/api/upload', { method: 'POST', body: formData });
+    const data = await resp.json();
+
+    data.results.forEach((r, i) => {
+      const el = document.getElementById(tempIds[i]);
+      if (!el) return;
+      const statusEl = el.querySelector('.file-status');
+      if (r.status === 'accepted') {
+        statusEl.className = 'file-status status-accepted';
+        statusEl.textContent = `✓ ${r.pdf_type} · ${r.pages}pp`;
+        el.querySelector('.file-meta').textContent = `${r.authors || 'Unknown'} · ${r.pages} pages`;
+        el.querySelector('.file-name').textContent  = r.title || r.filename;
+        // store paper_id on element for deletion
+        el.dataset.paperId = r.paper_id || '';
+      } else if (r.status === 'rejected') {
+        statusEl.className = 'file-status status-rejected';
+        statusEl.textContent = `✗ ${r.reason}`;
+      } else if (r.status === 'duplicate') {
+        statusEl.className = 'file-status status-duplicate';
+        statusEl.textContent = 'Duplicate';
+      } else {
+        statusEl.className = 'file-status status-rejected';
+        statusEl.textContent = `Error: ${r.reason}`;
+      }
+    });
+
+    // Refresh paper list
+    await refreshPapers();
+    if (state.papers.length > 0) {
+      document.getElementById('proceedBtn').disabled = false;
+    }
+    startKBPolling();
+
+  } catch(e) {
+    showToast('Upload failed: ' + e.message);
+    tempIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.querySelector('.file-status').textContent = 'Error';
+    });
+  }
+}
+
+async function deleteFileItem(itemId) {
+  const el = document.getElementById(itemId);
+  if (!el) return;
+
+  // Animate out
+  el.style.transition = 'opacity .2s ease, transform .2s ease';
+  el.style.opacity = '0';
+  el.style.transform = 'translateX(8px)';
+
+  setTimeout(async () => {
+    const paperId = el.dataset.paperId || '';
+    el.remove();
+
+    // Call backend to remove if it was accepted
+    if (paperId) {
+      try {
+        await fetch(`/api/delete/${paperId}`, { method: 'DELETE' });
+      } catch(e) {
+        // silent fail — UI already updated
+      }
+    }
+
+    // Refresh paper list
+    await refreshPapers();
+
+    // Disable proceed button if no papers left
+    if (state.papers.length === 0) {
+      document.getElementById('proceedBtn').disabled = true;
+    }
+
+    // Hide actions row if file list is empty
+    const fl = document.getElementById('fileList');
+    if (fl.children.length === 0) {
+      document.getElementById('actionsRow').style.display = 'none';
+    }
+  }, 200);
+}
+
+// ══════════════════════════════════════════════════════════
+//  PAGE 2 — MODE SELECTION
+// ══════════════════════════════════════════════════════════
+function populatePage2() {
+  // Populate scope dropdown
+  const sel = document.getElementById('scopeSelect');
+  sel.innerHTML = '';
+  if (state.mode === 'qa' || !state.mode) {
+    sel.insertAdjacentHTML('beforeend', '<option value="">All Papers</option>');
+  }
+  state.papers.forEach(p => {
+    sel.insertAdjacentHTML('beforeend',
+      `<option value="${p.paper_id}">${p.title} (${p.paper_id})</option>`);
+  });
+  sel.onchange = () => {
+    state.scopePaperId = sel.value || null;
+  };
+  updateScopeLabel();
+}
+
+function selectMode(m) {
+  state.mode = m;
+  document.getElementById('cardQA').classList.toggle('selected', m === 'qa');
+  document.getElementById('cardLR').classList.toggle('selected', m === 'lr');
+  document.getElementById('startBtn').disabled = false;
+  updateScopeLabel();
+  // Repopulate dropdown
+  populatePage2();
+}
+
+function updateScopeLabel() {
+  const lbl = document.getElementById('scopeLabel');
+  if (state.mode === 'lr') {
+    lbl.textContent = 'Select paper to review';
+  } else {
+    lbl.textContent = 'Select scope for Q&A (optional)';
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+//  PAGE 3 — INIT
+// ══════════════════════════════════════════════════════════
+function initPage3() {
+  const isQA = state.mode === 'qa';
+
+  // Mode pill
+  const pill = document.getElementById('modePill');
+  pill.className = 'mode-pill ' + (isQA ? 'pill-qa' : 'pill-lr');
+  pill.textContent = isQA ? 'Q&A' : 'Literature Review';
+
+  // Sidebar
+  document.getElementById('sidebarModeTag').textContent = isQA ? 'Q&A Mode' : 'Lit Review Mode';
+  const sf = document.getElementById('sidebarFiles');
+  sf.innerHTML = '';
+  state.papers.forEach(p => {
+    const active = (!isQA && state.scopePaperId === p.paper_id) ||
+                   (isQA && state.scopePaperId === p.paper_id) ? 'active' : '';
+    sf.insertAdjacentHTML('beforeend', `
+      <div class="sidebar-item ${active}" onclick="sidebarSelect('${p.paper_id}', this)">
+        <div class="sidebar-dot"></div>
+        <div class="sidebar-item-text" title="${p.title}">${p.title}</div>
+      </div>`);
+  });
+  if (isQA) {
+    sf.insertAdjacentHTML('afterbegin', `
+      <div class="sidebar-item ${!state.scopePaperId ? 'active' : ''}"
+           onclick="sidebarSelect(null, this)">
+        <div class="sidebar-dot"></div>
+        <div class="sidebar-item-text"><em>All Papers</em></div>
+      </div>`);
+  }
+
+  // Panels
+  document.getElementById('qaPanel').style.display = isQA ? 'flex' : 'none';
+  document.getElementById('lrPanel').style.display  = isQA ? 'none' : 'flex';
+
+  // Title
+  const scopePaper = state.papers.find(p => p.paper_id === state.scopePaperId);
+  document.getElementById('p3Title').textContent =
+    scopePaper ? scopePaper.title : (isQA ? 'All Papers — Q&A' : 'Literature Review');
+  document.getElementById('p3Meta').textContent =
+    scopePaper ? `${scopePaper.authors} · ${scopePaper.pages}pp` : `${state.papers.length} papers indexed`;
+
+  if (!isQA) triggerLitReview();
+}
+
+function sidebarSelect(paperId, el) {
+  document.querySelectorAll('.sidebar-item').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  state.scopePaperId = paperId;
+  const scopePaper = state.papers.find(p => p.paper_id === paperId);
+  document.getElementById('p3Title').textContent =
+    scopePaper ? scopePaper.title : 'All Papers — Q&A';
+  document.getElementById('p3Meta').textContent =
+    scopePaper ? `${scopePaper.authors} · ${scopePaper.pages}pp` : `${state.papers.length} papers indexed`;
+
+  if (state.mode === 'lr' && paperId) {
+    // Clear and re-trigger
+    const area = document.getElementById('lrArea');
+    area.innerHTML = `<div class="generating-msg" id="generatingMsg">
+      <div class="generating-dots"><span></span><span></span><span></span></div>
+      <span>Generating literature review…</span></div>`;
+    state.lrGenerated[paperId] = false;
+    triggerLitReview();
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+//  LITERATURE REVIEW
+// ══════════════════════════════════════════════════════════
+async function triggerLitReview() {
+  const paperId = state.scopePaperId;
+  if (!paperId) {
+    // pick first paper
+    if (state.papers.length) {
+      state.scopePaperId = state.papers[0].paper_id;
+      triggerLitReview();
+    }
+    return;
+  }
+  if (state.lrGenerated[paperId]) return;
+  state.lrGenerated[paperId] = true;
+
+  try {
+    const resp = await fetch(`/api/litreview/${paperId}`);
+    const data = await resp.json();
+    if (data.error) { showToast(data.error); return; }
+    renderLitReview(data);
+  } catch(e) {
+    showToast('Literature review failed: ' + e.message);
+  }
+}
+
+function renderLitReview(data) {
+  const area = document.getElementById('lrArea');
+  const gm   = document.getElementById('generatingMsg');
+  if (gm) gm.remove();
+
+  // Header card
+  area.insertAdjacentHTML('beforeend', `
+    <div class="lr-header-card">
+      <h2>${data.title}</h2>
+      <div class="lr-header-meta">
+        <span class="lr-meta-item"><strong>Authors:</strong>&nbsp;${data.authors}</span>
+        <span class="lr-meta-item"><strong>Year:</strong>&nbsp;${data.year}</span>
+      </div>
+    </div>`);
+
+  // Section cards with staggered animation
+  data.sections.forEach((sec, i) => {
+    const html = marked.parse(sec.body || '');
+    const card = document.createElement('div');
+    card.className = 'lr-section-card';
+    card.innerHTML = `
+      <div class="lr-section-head">
+        <div class="lr-num">${sec.num}</div>
+        <div class="lr-section-title">${sec.title}</div>
+      </div>
+      <div class="lr-section-body">${html}</div>`;
+    area.appendChild(card);
+    setTimeout(() => card.classList.add('visible'), 100 + i * 120);
+  });
+}
+
+// ══════════════════════════════════════════════════════════
+//  Q&A CHAT
+// ══════════════════════════════════════════════════════════
+function handleChatKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+async function sendMessage() {
+  if (state.qaWaiting) return;
+  const input = document.getElementById('chatInput');
+  const text  = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  input.style.height = 'auto';
+
+  appendUserBubble(text);
+  const typingId = appendTypingIndicator();
+  state.qaWaiting = true;
+  document.getElementById('sendBtn').disabled = true;
+
+  try {
+    const resp = await fetch('/api/qa', {
+      method : 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body   : JSON.stringify({ question: text, paper_id: state.scopePaperId })
+    });
+    const data = await resp.json();
+    removeTypingIndicator(typingId);
+
+    if (data.error) {
+      appendAIBubble(`⚠️ ${data.error}`, [], null);
+    } else {
+      appendAIBubble(data.answer, data.bibliography || [], {
+        faithfulness: data.faithfulness,
+        relevancy   : data.relevancy,
+        attempts    : data.attempts
+      });
+    }
+  } catch(e) {
+    removeTypingIndicator(typingId);
+    appendAIBubble('⚠️ Request failed. Please try again.', [], null);
+  }
+
+  state.qaWaiting = false;
+  document.getElementById('sendBtn').disabled = false;
+  scrollChat();
+}
+
+function appendUserBubble(text) {
+  const ca = document.getElementById('chatArea');
+  ca.insertAdjacentHTML('beforeend', `
+    <div class="msg user">
+      <div class="avatar user">You</div>
+      <div class="bubble user">${escapeHtml(text)}</div>
+    </div>`);
+  scrollChat();
+}
+
+function appendTypingIndicator() {
+  const id = 'typing_' + Date.now();
+  const ca = document.getElementById('chatArea');
+  ca.insertAdjacentHTML('beforeend', `
+    <div class="msg" id="${id}">
+      <div class="avatar ai">RA</div>
+      <div class="bubble ai">
+        <div class="typing-dots"><span></span><span></span><span></span></div>
+      </div>
+    </div>`);
+  scrollChat();
+  return id;
+}
+
+function removeTypingIndicator(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+function appendAIBubble(mdText, bibliography, scores) {
+  const ca  = document.getElementById('chatArea');
+  const html = marked.parse(mdText || '');
+
+  let sourceChips = '';
+  if (bibliography && bibliography.length) {
+    sourceChips = '<div class="sources-row">' +
+      bibliography.map(b => `<span class="source-chip" title="${escapeHtml(b)}">📄 ${b.slice(0,40)}…</span>`).join('') +
+      '</div>';
+  }
+
+  let evalChips = '';
+  if (scores) {
+    evalChips = `<div class="eval-row">
+      <span class="eval-chip">Faithfulness: ${(scores.faithfulness * 100).toFixed(0)}%</span>
+      <span class="eval-chip">Relevancy: ${(scores.relevancy * 100).toFixed(0)}%</span>
+      <span class="eval-chip">Loops: ${scores.attempts}</span>
+    </div>`;
+  }
+
+  ca.insertAdjacentHTML('beforeend', `
+    <div class="msg">
+      <div class="avatar ai">RA</div>
+      <div class="bubble ai">
+        <div class="md-body">${html}</div>
+        ${sourceChips}
+        ${evalChips}
+      </div>
+    </div>`);
+  scrollChat();
+}
+
+function scrollChat() {
+  const ca = document.getElementById('chatArea');
+  ca.scrollTop = ca.scrollHeight;
+}
+
+// ══════════════════════════════════════════════════════════
+//  KB STATUS POLLING
+// ══════════════════════════════════════════════════════════
+let kbPollInterval = null;
+function startKBPolling() {
+  if (kbPollInterval) return;
+  kbPollInterval = setInterval(pollKBStatus, 3000);
+  pollKBStatus();
+}
+
+async function pollKBStatus() {
+  try {
+    const r = await fetch('/api/status');
+    const d = await r.json();
+    const badge = document.getElementById('kbBadge');
+    if (d.kb_ready) {
+      badge.textContent = `KB: ${d.papers_loaded}p · ${d.chunks_indexed}c`;
+      badge.className   = 'kb-badge ready';
+      state.kbReady     = true;
+      clearInterval(kbPollInterval); kbPollInterval = null;
+    } else if (d.papers_loaded > 0) {
+      badge.textContent = `KB: indexing…`;
+      badge.className   = 'kb-badge indexing';
+    }
+  } catch(e) {}
+}
+
+// ══════════════════════════════════════════════════════════
+//  UTILITIES
+// ══════════════════════════════════════════════════════════
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+            .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+
+// Configure marked options
+if (window.marked) {
+  marked.setOptions({ breaks: true, gfm: true });
+}
+</script>
+</body>
+</html>s

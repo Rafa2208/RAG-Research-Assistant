@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+uploads/
+papers/
+metadata/
+chunks_store/
+*.bin
+*.json
