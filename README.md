@@ -13,11 +13,11 @@
 5. [Document Type Acceptance Criteria](#document-type-acceptance-criteria)
 6. [Section Aware Chunking](#section-aware-chunking)
 7. [Embedding Model](#embedding-model)
-8. [Dual Indexing — FAISS and BM25](#dual-indexing--faiss-and-bm25)
+8. [Dual Indexing - FAISS and BM25](#dual-indexing--faiss-and-bm25)
 9. [Hybrid Retrieval with Reciprocal Rank Fusion](#hybrid-retrieval-with-reciprocal-rank-fusion)
 10. [CrossEncoder Reranking](#crossencoder-reranking)
-11. [Agentic Q&A Mode — Mode 1](#agentic-qa-mode--mode-1-langgraph-state-graph)
-12. [Literature Review Mode — Mode 2](#literature-review-mode--mode-2-hallucination-safeguard)
+11. [Agentic Q&A Mode - Mode 1](#agentic-qa-mode--mode-1-langgraph-state-graph)
+12. [Literature Review Mode - Mode 2](#literature-review-mode--mode-2-hallucination-safeguard)
 13. [LLM API Used](#llm-api-used)
 14. [Evaluation Metrics](#evaluation-metrics)
 15. [Model Response Comparison](#model-response-comparison-vs-claude)
@@ -47,7 +47,7 @@ The system uses the Groq API for LLM inference, runs on CPU only hardware, and r
 ![System Architecture](static/screenshots/architecture.svg)
 
 
-All pipeline components — embedding model, FAISS index, BM25 index, chunk corpus, and metadata registry — are loaded into process memory at server startup and held for the lifetime of the server, eliminating cold start latency per request.
+All pipeline components - embedding model, FAISS index, BM25 index, chunk corpus, and metadata registry are loaded into process memory at server startup and held for the lifetime of the server, eliminating cold start latency per request.
 
 ---
 
@@ -100,7 +100,7 @@ SHA-256 hashing is applied to every file before processing for content level ded
 
 $$|T_{LlamaIndex}| \geq 0.9 \times |T_{PyMuPDF}|$$
 
-- Heading extraction via Groq LLM — first 8,000 characters submitted with pipe delimited response format
+- Heading extraction via Groq LLM - first 8,000 characters submitted with pipe delimited response format
 - Same LLM first, regex fallback strategy for title and authors
 
 Both paths share `call_llm()` backed by `llama-3.1-8b-instant` on Groq with exponential backoff retry up to 5 attempts.
@@ -172,7 +172,7 @@ With $k_1 = 1.5$, $b = 0.75$.
 
 $$IDF(q_i) = \log \frac{N - n(q_i) + 0.5}{n(q_i) + 0.5}$$
 
-BM25 captures exact lexical matching that dense retrieval misses — critical for humanities texts where theorist names and specialised terminology must be matched precisely.
+BM25 captures exact lexical matching that dense retrieval misses - critical for humanities texts where theorist names and specialised terminology must be matched precisely.
 
 ---
 
@@ -198,7 +198,7 @@ $$s_i = f_\theta(Q, c_i)$$
 
 Producing a scalar relevance score per candidate. All candidates re-sorted by descending $s_i$ and final top-k returned.
 
-Reranking is bypassed when `|R| ≤ k`. No fine tuning required — pre trained weights used directly, fitting within the 8GB RAM constraint.
+Reranking is bypassed when `|R| ≤ k`. No fine tuning required - pre trained weights used directly, fitting within the 8GB RAM constraint.
 
 Post rerank scores were substantially higher and showed greater variation than pre-rerank RRF scores across all test queries, confirming the CrossEncoder's ability to separate strongly relevant chunks from borderline ones.
 
@@ -218,8 +218,7 @@ Post rerank scores were substantially higher and showed greater variation than p
 LangGraph was chosen because it allows the agentic loop to be expressed as a typed directed state graph with conditional edges, making the retrieve → critic → refine → generate cycle explicit, structured, and easy to extend.
 
 ### State Graph Topology
-retrieve → critic → [sufficient OR attempts ≥ 2] → generate → END
-↘ [insufficient] → refine → retrieve
+![State Graph Topology](static/screenshots/state_graph.png)
 
 
 **QAState TypedDict fields:**
