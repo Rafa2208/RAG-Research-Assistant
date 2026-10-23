@@ -1,6 +1,6 @@
 # A RAG Based Intelligent Research Assistant for Academic Document Analysis, Automated Question Answering and Literature Review Using Hybrid Retrieval
 
-> An agentic, open source research assistant that lets humanities and social science scholars upload their own academic PDF corpus and interact with it through grounded question answering and structured literature review generation — running entirely on free tools with no GPU required.
+> An agentic, open source research assistant that lets users to upload their own academic PDF corpus and interact with it through grounded question answering and structured literature review generation — running entirely on free tools with no GPU required.
 
 ---
 
@@ -44,3 +44,4 @@ The system uses the Groq API for LLM inference, runs on CPU only hardware, and r
 ---
 
 ## System Architecture
+![System Architecture](static/screenshots/architecture.svg)
