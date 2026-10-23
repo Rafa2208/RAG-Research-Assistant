@@ -417,11 +417,14 @@ The key can also be entered at runtime through the web interface on Page 1 witho
 ### Document Classification Results
 ![Classification](static/screenshots/classification.png)
 
-### Mode Selection
-![Mode Selection](static/screenshots/mode_selection.png)
+### Mode 1 Selection
+![Mode Selection](static/screenshots/mode1.png)
 
 ### Q&A Interaction with Evaluation Scores
 ![QA](static/screenshots/qa.png)
+
+### Mode 2 Selection
+![Mode Selection](static/screenshots/mode2.png)
 
 ### Literature Review Output
 ![Literature Review](static/screenshots/lit_review.png)
