@@ -84,7 +84,7 @@ SHA-256 hashing is applied to every file before processing for content level ded
 
 ## Dual Path Metadata Extraction
 
-### Path A — Scanned and OCR Pipeline
+### Path A - Scanned and OCR Pipeline
 
 - Heading extraction via `ocr_extract_headings()` using four compiled regex patterns targeting Roman numeral headings, decimal headings, and known all-caps section names
 - OCR corruption corrections: `H.` → `II.`, `n.` → `II.`, `m.` → `III.`
@@ -93,7 +93,7 @@ SHA-256 hashing is applied to every file before processing for content level ded
 - Image page detection via `detect_image_pages()` — pages rendered to PNG at 2x resolution and submitted to `meta-llama/llama-4-scout-17b-16e-instruct` via Groq vision API
 - Title and authors: Groq LLM first, regex fallback via `ocr_extract_title_authors()`
 
-### Path B — Digital Born Pipeline
+### Path B - Digital Born Pipeline
 
 - LlamaIndex `SimpleDirectoryReader` for primary text extraction
 - LlamaIndex output preferred over PyMuPDF if:
@@ -347,19 +347,7 @@ Evaluated across 18 questions spanning 5 humanities papers. Claude generated res
 ---
 
 ## Project Structure
-research_assistant/
-├── app.py # Flask backend — all pipeline logic
-├── requirements.txt # Python dependencies
-├── .env # Groq API key (never commit)
-├── .gitignore
-├── templates/
-│ └── index.html # Three page SPA frontend
-├── static/
-│ └── research_assistant_logo1.jpg
-├── uploads/ # Auto created — uploaded PDFs
-├── papers/ # Auto created — accepted paper store
-├── metadata/ # Auto created — metadata_registry.json
-└── chunks_store/ # Auto created — chunks.json, faiss_index.bin
+![Project Structure](static/screenshots/structure.png)
 
 
 ---
