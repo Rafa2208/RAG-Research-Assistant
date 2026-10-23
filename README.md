@@ -1,6 +1,6 @@
 # A RAG Based Intelligent Research Assistant for Academic Document Analysis, Automated Question Answering and Literature Review Using Hybrid Retrieval
 
-> An agentic, open source research assistant that lets users to upload their own academic PDF corpus and interact with it through grounded question answering and structured literature review generation — running entirely on free tools with no GPU required.
+> An agentic, open source research assistant that lets users to upload their own academic PDF corpus and interact with it through grounded question answering and structured literature review generation - running entirely on free tools with no GPU required.
 
 ---
 
@@ -111,10 +111,10 @@ Both paths share `call_llm()` backed by `llama-3.1-8b-instant` on Groq with expo
 
 | Type | Accepted |
 |---|---|
-| DIGITAL BORN | ✅ Accepted |
-| SCANNED + OCR | ✅ Accepted |
-| FULLY SCANNED | ❌ Rejected |
-| HYBRID | ❌ Rejected |
+| DIGITAL BORN |  Accepted |
+| SCANNED + OCR |  Accepted |
+| FULLY SCANNED |  Rejected |
+| HYBRID |  Rejected |
 
 Rejected files are deleted from disk, their hash evicted from `seen_hashes`, and a rejection record returned to the frontend with a red badge. This gate prevents unextractable or noisy text from propagating into the knowledge base.
 
@@ -152,17 +152,17 @@ Chosen because it is lightweight, runs on CPU only, and produces strong semantic
 
 ---
 
-## Dual Indexing — FAISS and BM25
+## Dual Indexing - FAISS and BM25
 
-### FAISS — Dense Index
+### FAISS - Dense Index
 
-`faiss.IndexFlatIP` — exact inner product similarity. Since all vectors are L2 normalised, inner product equals cosine similarity:
+`faiss.IndexFlatIP` - exact inner product similarity. Since all vectors are L2 normalised, inner product equals cosine similarity:
 
 $$FAISS(q, k) = \underset{i}{\text{arg top-}k} \; q^\top \hat{e}_i = \cos(\theta_{qi})$$
 
 Index persisted to `chunks_store/faiss_index.bin`.
 
-### BM25 — Sparse Index
+### BM25 - Sparse Index
 
 `BM25Okapi` over lowercased, whitespace tokenised chunk texts:
 
@@ -204,18 +204,18 @@ Post rerank scores were substantially higher and showed greater variation than p
 
 ---
 
-## Agentic Q&A Mode — Mode 1 (LangGraph State Graph)
+## Agentic Q&A Mode - Mode 1 (LangGraph State Graph)
 
 ### Why LangGraph and not other frameworks?
 
 | Framework | Reason not chosen |
 |---|---|
-| LangChain standard chains | Linear — no conditional branching or self critique loop |
+| LangChain standard chains | Linear - no conditional branching or self critique loop |
 | LlamaIndex query engine | No native state graph or retry logic |
-| AutoGen / CrewAI | Multi agent — overkill for a single retrieval loop |
+| AutoGen / CrewAI | Multi agent - overkill for a single retrieval loop |
 | Manual while loop | Unstructured, hard to extend or debug |
 
-LangGraph was chosen because it allows the agentic loop to be expressed as a typed directed state graph with conditional edges — making the retrieve → critic → refine → generate cycle explicit, structured, and easy to extend.
+LangGraph was chosen because it allows the agentic loop to be expressed as a typed directed state graph with conditional edges, making the retrieve → critic → refine → generate cycle explicit, structured, and easy to extend.
 
 ### State Graph Topology
 retrieve → critic → [sufficient OR attempts ≥ 2] → generate → END
@@ -239,7 +239,7 @@ $$|retrieve\ calls| \leq k_{max} + 1 = 3$$
 
 ---
 
-## Literature Review Mode — Mode 2 (Hallucination Safeguard)
+## Literature Review Mode - Mode 2 (Hallucination Safeguard)
 
 Five fixed section queries issued to `HybridRetriever.retrieve()` with `top_k=4`, scoped to the target paper:
 
@@ -257,7 +257,7 @@ Before generating future directions, a verification LLM call is issued requestin
 
 > *"The paper does not explicitly state future research directions or gaps."*
 
-This prevents the model from fabricating research agendas from its own training data — one of the most common failure modes of automated summarisation systems.
+This prevents the model from fabricating research agendas from its own training data - one of the most common failure modes of automated summarisation systems.
 
 A fixed 3 second inter-call delay is enforced between all LLM generation calls to respect Groq API rate limits.
 
@@ -272,7 +272,7 @@ A fixed 3 second inter-call delay is enforced between all LLM generation calls t
 Groq was chosen over OpenAI and Anthropic APIs because:
 - Free tier available with generous token limits
 - Extremely fast inference optimised for LLaMA models
-- No GPU required locally — all heavy computation offloaded to Groq
+- No GPU required locally - all heavy computation offloaded to Groq
 - `llama-3.1-8b-instant` is capable enough for academic Q&A at minimal latency
 
 `call_llm()` implements exponential backoff retry up to 5 attempts with parsed wait times from rate limit error responses.
@@ -391,7 +391,7 @@ Open your browser at `http://localhost:5000`
 1. Enter your Groq API key and click Connect
 2. Upload your academic PDFs
 3. Select Q&A or Literature Review mode
-4. Select scope — all papers or single paper
+4. Select scope - all papers or single paper
 5. Ask questions or generate a literature review
 
 ---
@@ -430,17 +430,17 @@ The key can also be entered at runtime through the web interface on Page 1 witho
 
 ## References
 
-- Lewis et al. (2020) — Retrieval Augmented Generation for Knowledge Intensive NLP Tasks
-- Gao et al. (2023) — RAG for Large Language Models: A Survey
-- Karpukhin et al. (2020) — Dense Passage Retrieval
-- Es et al. (2023) — RAGAS: Automated Evaluation of RAG
-- Yao et al. (2022) — ReAct: Synergizing Reasoning and Acting
-- Asai et al. (2023) — Self RAG
-- Jiang et al. (2023) — FLARE: Active Retrieval Augmented Generation
-- Shao et al. (2023) — ITER RETGEN
-- Singh et al. (2025) — Agentic RAG Survey
-- Robertson and Zaragoza (2009) — BM25 and Beyond
-- Yu et al. (2024) — RankRAG
-- Jeong et al. (2024) — Adaptive RAG
-- Ali et al. (2024) — Automated Literature Review using NLP and RAG
-- Agarwal et al. (2024) — LitLLM
+- Lewis et al. (2020), Retrieval Augmented Generation for Knowledge Intensive NLP Tasks
+- Gao et al. (2023), RAG for Large Language Models: A Survey
+- Karpukhin et al. (2020), Dense Passage Retrieval
+- Es et al. (2023), RAGAS: Automated Evaluation of RAG
+- Yao et al. (2022), ReAct: Synergizing Reasoning and Acting
+- Asai et al. (2023), Self RAG
+- Jiang et al. (2023), FLARE: Active Retrieval Augmented Generation
+- Shao et al. (2023), ITER RETGEN
+- Singh et al. (2025), Agentic RAG Survey
+- Robertson and Zaragoza (2009), BM25 and Beyond
+- Yu et al. (2024), RankRAG
+- Jeong et al. (2024), Adaptive RAG
+- Ali et al. (2024), Automated Literature Review using NLP and RAG
+- Agarwal et al. (2024), LitLLM
